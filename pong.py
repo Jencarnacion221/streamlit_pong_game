@@ -1,5 +1,5 @@
 import pygame, sys, random
-
+import streamlit as st
 
 #Functions done as to ensure code is more modular and looks cleaner
 def ball_animation(): #This is done to make ball moved
