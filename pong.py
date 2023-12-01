@@ -22,10 +22,10 @@ def ball_animation(): #This is done to make ball moved
 
 
 	if ball.colliderect(player):
-		ball.color += BLUE
+		pygame.draw.ellipse(screen, BLUE, ball)
 		ball_speed_x *= -1
 	if ball.colliderect(opponent):
-		ball.color += RED
+		pygame.draw.ellipse(screen, RED, ball)
 		ball_speed_x *= -1
 
 #This ensures the player doesn't go beyond the screen by automatically teleporting them to the boundary if they attempt to get past it
@@ -137,8 +137,8 @@ while True:
 
 	# Visuals 
 	screen.fill(bg_color)
-	pygame.draw.rect(screen, RED, player)
-	pygame.draw.rect(screen, BLUE, opponent)
+	pygame.draw.rect(screen, BLUE, player)
+	pygame.draw.rect(screen, RED, opponent)
 	pygame.draw.ellipse(screen, light_grey, ball)
 	pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0),(screen_width / 2, screen_height))
 
