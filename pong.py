@@ -1,5 +1,4 @@
 import pygame, sys, random
-import streamlit as st
 
 #Functions done as to ensure code is more modular and looks cleaner
 def ball_animation(): #This is done to make ball moved
@@ -22,7 +21,9 @@ def ball_animation(): #This is done to make ball moved
 		score_time = pygame.time.get_ticks()
 
 
-	if ball.colliderect(player) or ball.colliderect(opponent):
+	if ball.colliderect(player):
+		ball_speed_x *= -1
+	if ball.colliderect(opponent):
 		ball_speed_x *= -1
 
 #This ensures the player doesn't go beyond the screen by automatically teleporting them to the boundary if they attempt to get past it
@@ -87,6 +88,8 @@ pygame.display.set_caption('Pong')
 # Colors
 light_grey = (200,200,200)
 bg_color = pygame.Color('grey12')
+red = (255,0,0)
+blue = (0,0,255)
 
 # Game Rectangles
 ball = pygame.Rect(screen_width / 2 - 15, screen_height / 2 - 15, 30, 30)
@@ -132,8 +135,8 @@ while True:
 
 	# Visuals 
 	screen.fill(bg_color)
-	pygame.draw.rect(screen, light_grey, player)
-	pygame.draw.rect(screen, light_grey, opponent)
+	pygame.draw.rect(screen, blue, player)
+	pygame.draw.rect(screen, red, opponent)
 	pygame.draw.ellipse(screen, light_grey, ball)
 	pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0),(screen_width / 2, screen_height))
 
