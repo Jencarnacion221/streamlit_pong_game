@@ -22,8 +22,10 @@ def ball_animation(): #This is done to make ball moved
 
 
 	if ball.colliderect(player):
+		ball.color += BLUE
 		ball_speed_x *= -1
 	if ball.colliderect(opponent):
+		ball.color += RED
 		ball_speed_x *= -1
 
 #This ensures the player doesn't go beyond the screen by automatically teleporting them to the boundary if they attempt to get past it
