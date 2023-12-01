@@ -2,7 +2,7 @@ import pygame, sys, random
 
 #Functions done as to ensure code is more modular and looks cleaner
 def ball_animation(): #This is done to make ball moved
-	global ball_speed_x, ball_speed_y, player_score, opponent_score, score_time
+	global ball_speed_x, ball_speed_y, player_score, opponent_score, score_time, ball_color
 	
 	ball.x += ball_speed_x
 	ball.y += ball_speed_y
@@ -22,10 +22,10 @@ def ball_animation(): #This is done to make ball moved
 
 
 	if ball.colliderect(player):
-		pygame.draw.ellipse(screen, BLUE, ball)
+		ball_color == BLUE
 		ball_speed_x *= -1
 	if ball.colliderect(opponent):
-		pygame.draw.ellipse(screen, RED, ball)
+		ball_color == RED
 		ball_speed_x *= -1
 
 #This ensures the player doesn't go beyond the screen by automatically teleporting them to the boundary if they attempt to get past it
@@ -51,7 +51,10 @@ def opponent_ai():
 
 #This randomizes the movement of the pong ball everytime it goes past the place
 def ball_start():
-	global ball_speed_x, ball_speed_y, score_time
+	global ball_speed_x, ball_speed_y, score_time, ball_color
+	has_changed_direction = False
+	if has_changed_direction == False:
+		ball_color = light_grey
 	current_time = pygame.time.get_ticks()
 	ball.center = (screen_width/2, screen_height/2)
 	player.center = (10, screen_height / 2 - 70)
@@ -92,6 +95,7 @@ light_grey = (200,200,200)
 bg_color = pygame.Color('grey12')
 RED = (255,0,0)
 BLUE = (0,0,255)
+ball_color = light_grey #this is used to help change the color of the ball
 
 # Game Rectangles
 ball = pygame.Rect(screen_width / 2 - 15, screen_height / 2 - 15, 30, 30)
@@ -134,12 +138,18 @@ while True:
 	ball_animation()
 	player_animation()
 	opponent_ai()
-
+	
 	# Visuals 
 	screen.fill(bg_color)
 	pygame.draw.rect(screen, BLUE, player)
 	pygame.draw.rect(screen, RED, opponent)
-	pygame.draw.ellipse(screen, light_grey, ball)
+	pygame.draw.ellipse(screen, ball_color, ball)
+	if ball.colliderect(player):
+		has_changed_direction = True
+		ball_color = BLUE
+	elif ball.colliderect(opponent):	
+		has_changed_direction = True
+		ball_color = RED
 	pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0),(screen_width / 2, screen_height))
 
 	if score_time:
@@ -152,4 +162,5 @@ while True:
 	screen.blit(player_text,(500,470))
 
 	pygame.display.flip()
+	pygame.display.update()
 	clock.tick(60)
